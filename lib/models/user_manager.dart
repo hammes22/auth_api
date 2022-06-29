@@ -16,7 +16,7 @@ class UserManager extends ChangeNotifier {
     Map responser = await _loginRepository.fazerLogin(user.email, user.senha);
     if (responser['status'] == 200) {
       String token = responser["token"];
-      tokenSave(token);
+      _tokenSave(token);
       onSuccess();
     } else {
       String message = responser["message"];
@@ -24,7 +24,7 @@ class UserManager extends ChangeNotifier {
     }
   }
 
-  void tokenSave(token) async {
+  void _tokenSave(token) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     await sharedPreferences.setString('token', token);
   }
@@ -37,5 +37,10 @@ class UserManager extends ChangeNotifier {
     } else {
       return true;
     }
+  }
+
+  void signOut() async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    await sharedPreferences.clear();
   }
 }
