@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:auth_api/global/environment.dart';
 import 'package:http/http.dart' as http;
 
 class LoginRepository {
   Future<Map<dynamic, dynamic>> fazerLogin(String email, String senha) async {
     var res = {};
 
-    var url = Uri.parse("http://192.168.100.21:8000/auth/login");
     var response = await http.post(
-      url,
+      Uri.parse(Environment.apiUrl),
       body: {
         "email": email,
         "password": senha,
